@@ -17,7 +17,7 @@ modelparams = dict(
     c = 0.1, # dilution 
     N = 10000,  # number of neurons
     p = 10, # number of patterns
-    amp_ff = .6,#1.5,# strenght of the feedforward weights
+    amp_ff = .65,#0.6,# strenght of the feedforward weights
     std_low_dim = .65,#standard deviation of the low rank noise
     std_priv = 0., # standard deviation private noise
     amp_median = 3., # amplitude connectivity
@@ -51,7 +51,7 @@ def simulate_network():
     matrix = conn.connectivity_sequence(w_rec, w_ff)
 
     #CREATING DYNAMICS
-    indexes =range(2000)
+    indexes =range(10000)
     np.random.seed()
     patterns_current = conn.patterns_current
     dyn = NetworkDynamics(lr, tf_sig, matrix, patterns_current)
@@ -67,12 +67,8 @@ def simulate_network():
     noise = []
     overlaps = []
     ovs, ov_norm, sol, rn_all,  rn, noi = dyn.dynamics_low(modelparams['T'], u_init)
-    return ovs, sol, rn
+    return ov_norm, sol, rn
 
-#ov_norm, sol, rn  = simulate_network()
-#time = np.linspace(0,modelparams['T'],sol.shape[0])
-
-#print(rn)
 #plt.plot(time,ov_norm)
 #plt.show()
 #plt.plot(time,sol)

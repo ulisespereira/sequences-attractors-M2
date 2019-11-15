@@ -9,7 +9,7 @@ def dwell_time(overlap, dt):
 
 def ind_patterns(overlap):
     '''indexes when each overlap is bigger than 0.5''' 
-    ind_ov = overlap>0.5
+    ind_ov = overlap>0.4
     return ind_ov
 
 def mean_rate_at_overlap(sol, ind_ov):
@@ -61,21 +61,22 @@ def cca(rates, ind):
     pcas = pca(rates, ind)
     alig = []
     for l in range(rates.shape[1]):
+        the_al = []
         for i in range(rates.shape[1]):
-            if l!=i:
-                pca_i = pcas[i]
-                pca_l = pcas[l]
-                k = len(pcas[l])
-                cca = CCA(n_components=k)
-                cca.fit(pca_i.T, pca_l.T)
-                U_c, V_c = cca.transform(pca_i.T, pca_l.T)
-                al = 0
-                for s in range(k):
-                    r = np.corrcoef(U_c[:,s],V_c[:,s])[0,1]
-                    al =al+r 
-                alig.append(al/float(k))
-        alig = np.array(alig)
-        return alig
+            pca_i = pcas[i]
+            pca_l = pcas[l]
+            k = len(pcas[l])
+            cca = CCA(n_components=k)
+            cca.fit(pca_i.T, pca_l.T)
+            U_c, V_c = cca.transform(pca_i.T, pca_l.T)
+            al = 0
+            for s in range(k):
+                r = np.corrcoef(U_c[:,s],V_c[:,s])[0,1]
+                al =al+r 
+            the_al.append(al/float(k))
+        alig.append(the_al)
+    alig = np.array(alig)
+    return alig
                     
 
 

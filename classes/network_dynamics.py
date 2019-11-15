@@ -81,7 +81,7 @@ class NetworkDynamics:
                     overlap = (1./N) * np.einsum('ij,j->i',self.myLR.g(self.patterns_fr),rn)
                     ov_norm.append(overlap/(np.sqrt(self.myLR.intg2)*np.std(rn)))
                     ovs.append(overlap)	
-                    print('t=',t,' of T=',T,'overlaps')
+                    #print('t=',t,' of T=',T,'overlaps')
             mysol = np.array(mysol)	
             ovs = np.array(ovs)
             ov_norm = np.array(ov_norm)

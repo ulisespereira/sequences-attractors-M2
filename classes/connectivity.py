@@ -40,12 +40,12 @@ class ConnectivityMatrix:
 		post_wrap =self.myLR.f(self.patterns_fr)[0:1,:]	
 
 
-		print('Patterns created. N patterns:', self.p)
+		#print('Patterns created. N patterns:', self.p)
 		#number of entries different than zero
 		N2bar=np.random.binomial(self.N*self.N,self.c)
 		row_ind=np.random.randint(0,high=self.N,size=N2bar)
 		column_ind=np.random.randint(0,high=self.N,size=N2bar)
-		print('Structural connectivity created')
+		#print('Structural connectivity created')
 		
 		dN=300000
 		n = int(N2bar/dN)
@@ -58,19 +58,19 @@ class ConnectivityMatrix:
 			gaussian = self.sigma * np.random.normal(0,1,con_ff.shape[0]) #gaussian
 			connectivity=np.concatenate((connectivity,con_rec + con_ff +  gaussian),axis=0)
 			#connectivity=np.concatenate((connectivity,con_rec + con_ff +  gaussian),axis=0)
-			print('Synaptic weights created:',100.*(l)/float(n),'%')
+			#print('Synaptic weights created:',100.*(l)/float(n),'%')
 		con_rec = np.einsum('ij,ij->j',post_rec[:,row_ind[n*dN:N2bar]],pre_rec[:,column_ind[n*dN:N2bar]])
 		con_ff = np.einsum('ij,ij->j',post_ff[:,row_ind[n*dN:N2bar]],pre_ff[:,column_ind[n*dN:N2bar]])
 		con_wrap = np.einsum('ij,ij->j',post_wrap[:,row_ind[n*dN:N2bar]],pre_wrap[:,column_ind[n*dN:N2bar]])
 		gaussian = self.sigma * np.random.normal(0,1,con_ff.shape[0]) #gaussian
-		print('Synaptic weights created:',100.,'%')
+		#print('Synaptic weights created:',100.,'%')
 		connectivity=np.concatenate((connectivity,con_rec + con_ff + gaussian),axis=0)		
 		#connectivity=np.concatenate((connectivity,con_rec + con_ff + gaussian),axis=0)		
 		connectivity=(self.myLR.Amp/(self.c*self.N))*connectivity
-		print('Synaptic weights created')
+		#print('Synaptic weights created')
 
 		connectivity=sparse.csr_matrix((connectivity,(row_ind,column_ind)),shape=(self.N,self.N))
-		print('connectivity created')
+		#print('connectivity created')
 
 		return connectivity
 	
