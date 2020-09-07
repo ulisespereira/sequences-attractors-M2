@@ -1,6 +1,8 @@
 import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.cross_decomposition import CCA
+import pdb
+
 
 def dwell_time(overlap, dt):
     ind_ov = ind_patterns(overlap)
@@ -16,6 +18,8 @@ def mean_rate_at_overlap(sol, ind_ov):
     '''firing rate patterns at each overlap'''
     rates = [] 
     for l in range(ind_ov.shape[1]):
+        n_ind = np.sum(ind_ov[:,l])
+        print('N ind=',n_ind)
         m_fr = np.mean(sol[ind_ov[:,l]], axis = 0)
         rates.append(m_fr)
     rates = np.array(rates)
@@ -69,10 +73,14 @@ def cca(rates, ind):
             cca = CCA(n_components=k)
             cca.fit(pca_i.T, pca_l.T)
             U_c, V_c = cca.transform(pca_i.T, pca_l.T)
+            #pdb.set_trace()
             al = 0
-            for s in range(k):
-                r = np.corrcoef(U_c[:,s],V_c[:,s])[0,1]
-                al =al+r 
+            if 1<k: # dimension is larger than 1
+                for s in range(k):
+                    r = np.corrcoef(U_c[:,s],V_c[:,s])[0,1]
+                    al =al+r 
+            else: # dimension is equal to 1
+                al = np.corrcoef(U_c[:,0], V_c)[0,1] #is equal to 1
             the_al.append(al/float(k))
         alig.append(the_al)
     alig = np.array(alig)

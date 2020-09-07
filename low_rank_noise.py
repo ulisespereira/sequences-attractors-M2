@@ -30,8 +30,8 @@ modelparams = dict(
 def simulate_network():
 
     #CREATING TRANSFER FUNCTION
-    non_param_transfer_functions = pickle.load(open('nonparam_tf.p','rb'))
-    param_transfer_functions = pickle.load(open('parametersHetero.p','rb'))
+    non_param_transfer_functions = pickle.load(open('data/nonparam_tf.p','rb'))
+    param_transfer_functions = pickle.load(open('data/parametersHetero.p','rb'))
 
     tf_sig = TransferFunction(param_transfer_functions, non_param_transfer_functions, modelparams['N']) 
 
