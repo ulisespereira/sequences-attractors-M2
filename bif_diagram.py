@@ -50,7 +50,7 @@ def exploring_noise_sequences(seed=2):
 
 def time_scale_sequences(seed=2):
     #the_w_rec, the_w_ff = pickle.load(open('data/attracotrs_params.p','rb'))
-    the_w_rec_seq, the_w_ff_seq = pickle.load(open('sequences_params_mean.p','rb'))
+    the_w_rec_seq, the_w_ff_seq = pickle.load(open('data/sequences_params_mean.p','rb'))
     s_seq = 60
     ch_w_ff= [the_w_ff_seq[l] for l in range(1,s_seq,5)]
     ch_w_rec= [the_w_rec_seq[l] for l in range(1,s_seq,5)]
